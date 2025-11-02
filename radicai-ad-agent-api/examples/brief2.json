@@ -1,0 +1,19 @@
+{
+  "campaign_id": "cmp_2025_10_15",
+  "goal": "boost brand awareness ahead of holiday season",
+  "product": {
+    "name": "EcoSip",
+    "category": "reusable water bottle",
+    "key_features": [
+      "double-wall insulation",
+      "BPA-free materials",
+      "lifetime warranty"
+    ],
+    "price": "$24.99"
+  },
+  "budget": 8000,
+  "channels": ["social", "display"],
+  "audience_hints": ["eco-conscious shoppers", "fitness enthusiasts"],
+  "tone": "friendly and inspiring"
+}
+

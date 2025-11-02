@@ -1,0 +1,19 @@
+{
+  "campaign_id": "cmp_2025_09_01",
+  "campaign_name": "FocusFlow trial signups",
+  "objective": "trial_signups",
+  "total_budget": 5000,
+  "budget_breakdown": { "search": 2500, "social": 2500 },
+  "ad_groups": [
+    {
+      "id": "ag_1",
+      "target": { "hint": "young professionals", "age": "25-45", "behaviors": ["productivity apps", "remote work"] },
+      "creatives": [
+        { "id": "c_1a", "headline": "Try FocusFlow — Free 14-Day Trial", "body": "AI task prioritization that fits your calendar.", "cta": "Start Free Trial", "justification": "Trial + AI feature" },
+        { "id": "c_1b", "headline": "Get More Done with FocusFlow", "body": "Prioritize what matters. Free trial, then $9.99/mo.", "cta": "Get Started", "justification": "Emphasizes value + price" }
+      ]
+    }
+  ],
+  "checks": { "budget_sum_ok": true, "required_fields_present": true, "channel_valid": true }
+}
+
