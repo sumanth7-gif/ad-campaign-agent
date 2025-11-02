@@ -8,7 +8,7 @@ This folder contains the complete submission for the RadicAI Senior ML/GenAI Eng
 
 - **`radicai-ad-agent-api/`** - Next.js API backend
   - Converts ad brief JSON into structured campaign plans
-  - Supports Groq and OpenAI providers
+  - Uses Groq for LLM inference
   - Zod schema validation
   - CORS-enabled API endpoint
 
@@ -29,8 +29,8 @@ This folder contains the complete submission for the RadicAI Senior ML/GenAI Eng
 ```bash
 cd radicai-ad-agent-api
 npm install
-cp .env.example .env.local
-# Add GROQ_API_KEY or OPENAI_API_KEY to .env.local
+# Create .env.local and add:
+# GROQ_API_KEY=your_api_key_here
 npm run dev
 # Runs on http://localhost:3000
 ```
@@ -46,7 +46,7 @@ npm run dev
 
 ## Key Features
 
-✅ **Multi-Provider Support**: Groq (default) and OpenAI  
+✅ **Groq Integration**: Fast LLM inference via Groq API  
 ✅ **Schema Validation**: Zod validation for input/output  
 ✅ **Consistency Checks**: Budget sums, required fields, channel validation  
 ✅ **Formatted Summary**: UI displays human-readable campaign summary  
@@ -59,7 +59,7 @@ npm run dev
 - ✅ README with setup instructions
 - ✅ Examples (2 briefs + outputs in `radicai-ad-agent-api/examples/`)
 - ✅ Automated checks & tests (Zod validation + budget sum checks)
-- ✅ Evaluation report (to be added)
+- ✅ Evaluation report (`EVALUATION.md`)
 
 ## Submission Checklist
 
@@ -68,5 +68,5 @@ npm run dev
 - [x] README with run instructions
 - [x] Examples (2 briefs + outputs)
 - [x] Tests (schema validation)
-- [ ] 1-page evaluation report (TODO)
+- [x] 1-page evaluation report (`EVALUATION.md`)
 

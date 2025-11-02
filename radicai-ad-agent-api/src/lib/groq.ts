@@ -8,8 +8,8 @@ export function getGroqClient(apiKey?: string) {
   return new Groq({ apiKey: key });
 }
 
-// Default to a supported GPT-OSS model; can be overridden via MODEL_ID
-export const defaultModel = process.env.MODEL_ID || "openai/gpt-oss-120b";
+// Default to a supported GPT-OSS model; can be overridden via GROQ_MODEL
+export const defaultModel = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
 
 export async function chatJson(client: Groq, messages: { role: "system" | "user" | "assistant"; content: string }[], model = defaultModel): Promise<string> {
   const res = await client.chat.completions.create({

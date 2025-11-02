@@ -1,6 +1,6 @@
 # RadicAI Ad Agent API
 
-Minimal Next.js API that converts an ad brief JSON into a structured campaign plan using LLM providers (Groq or OpenAI) and Zod validation.
+Minimal Next.js API that converts an ad brief JSON into a structured campaign plan using Groq and Zod validation.
 
 ## Setup
 
@@ -9,18 +9,8 @@ Minimal Next.js API that converts an ad brief JSON into a structured campaign pl
 
 ## Environment Variables
 
-### Provider Selection
-Set `LLM_PROVIDER=groq` (default) or `LLM_PROVIDER=openai`
-
-### Groq (Default)
-- `GROQ_API_KEY` (required if using Groq)
+- `GROQ_API_KEY` (required)
 - `GROQ_MODEL` (optional, default: `openai/gpt-oss-120b`)
-
-### OpenAI
-- `OPENAI_API_KEY` (required if using OpenAI)
-- `OPENAI_MODEL` (optional, default: `gpt-4o-mini`)
-
-**Note**: You only need to set the API key for your chosen provider. The system will automatically detect which provider to use based on available keys.
 
 ## Run
 

@@ -1,5 +1,5 @@
 import { Brief, BriefSchema, Plan, PlanSchema, AllowedChannels, sumBudget } from "@/lib/schemas";
-import { chatJson, type LLMProvider } from "@/lib/llm-provider";
+import { getGroqClient, chatJson } from "@/lib/groq";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -15,15 +15,13 @@ function fillUserPrompt(brief: Brief): string {
   return userPromptTemplate.replace("{{brief}}", JSON.stringify(brief, null, 2));
 }
 
-export type AgentOptions = { modelId?: string; provider?: LLMProvider };
+export type AgentOptions = { modelId?: string };
 
 export async function generatePlanFromBrief(briefInput: unknown, options: AgentOptions = {}): Promise<Plan> {
   const brief = BriefSchema.parse(briefInput);
 
-  // Use provider from options, env, or default to groq
-  const provider: LLMProvider = options.provider || (process.env.LLM_PROVIDER as LLMProvider) || "groq";
-  
-  const content = await chatJson(provider, [
+  const client = getGroqClient();
+  const content = await chatJson(client, [
     { role: "system", content: systemPrompt },
     { role: "user", content: fillUserPrompt(brief) }
   ], options.modelId);
