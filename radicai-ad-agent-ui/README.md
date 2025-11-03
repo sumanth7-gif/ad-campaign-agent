@@ -6,8 +6,9 @@ Minimal Next.js UI to submit an ad brief and display the generated campaign plan
 
 - Node 18+
 - Install deps: `npm install`
-- Env vars:
-  - `NEXT_PUBLIC_API_BASE` (optional, defaults to `http://localhost:3000`)
+- Env vars (optional):
+  - `NEXT_PUBLIC_API_BASE` - API endpoint (defaults to `http://localhost:3000`)
+  - See `.env.example` for configuration options
 
 ## Run
 
