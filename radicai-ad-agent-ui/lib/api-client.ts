@@ -10,8 +10,8 @@ export type Brief = {
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:3000";
 
-export async function createPlan(brief: Brief) {
-  const url = `${API_BASE}/api/chat/completions`;
+export async function createPlan(brief: Brief, includeMetrics = true) {
+  const url = `${API_BASE}/api/chat/completions${includeMetrics ? '?include_metrics=true' : ''}`;
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

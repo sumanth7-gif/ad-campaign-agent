@@ -1,5 +1,8 @@
 import { Brief, BriefSchema, Plan, PlanSchema, AllowedChannels, sumBudget } from "@/lib/schemas";
 import { getGroqClient, chatJson } from "@/lib/groq";
+import { detectHallucinations, logMetrics, type RequestMetrics } from "@/lib/metrics";
+import { formatRetrievedContext, validateAgainstKB } from "@/lib/retrieval";
+import { addScoresToPlan, scoreCreatives } from "@/lib/scoring";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -12,29 +15,76 @@ const systemPrompt = loadPrompt("system.md");
 const userPromptTemplate = loadPrompt("user.md");
 
 function fillUserPrompt(brief: Brief): string {
-  return userPromptTemplate.replace("{{brief}}", JSON.stringify(brief, null, 2));
+  const retrievedContext = formatRetrievedContext(brief);
+  const briefJson = JSON.stringify(brief, null, 2);
+  
+  let prompt = userPromptTemplate.replace("{{brief}}", briefJson);
+  
+  // Add retrieved context if available
+  if (retrievedContext) {
+    console.log(`[Grounding] Retrieved context:\n${retrievedContext.substring(0, 200)}...`);
+    prompt = prompt + "\n\n" + retrievedContext + "\n\nIMPORTANT: Use the verified facts above to ground your claims. Only use features, prices, and information from the retrieved context or the brief. Do not invent facts.";
+  } else {
+    console.log(`[Grounding] No KB match found for product: ${brief.product.name}`);
+  }
+  
+  return prompt;
 }
 
 export type AgentOptions = { modelId?: string };
 
-export async function generatePlanFromBrief(briefInput: unknown, options: AgentOptions = {}): Promise<Plan> {
+export interface AgentResponse {
+  plan: Plan;
+  metrics: RequestMetrics;
+}
+
+export async function generatePlanFromBrief(briefInput: unknown, options: AgentOptions = {}): Promise<AgentResponse> {
+  const startTime = Date.now();
   const brief = BriefSchema.parse(briefInput);
 
   const client = getGroqClient();
-  const content = await chatJson(client, [
+  const llmResponse = await chatJson(client, [
     { role: "system", content: systemPrompt },
     { role: "user", content: fillUserPrompt(brief) }
   ], options.modelId);
 
   let raw: unknown;
   try {
-    raw = JSON.parse(content);
+    raw = JSON.parse(llmResponse.content);
   } catch (e) {
     throw new Error("Model returned non-JSON content");
   }
 
   const parsed = PlanSchema.parse(raw);
-  return finalizePlan(brief, parsed);
+  const plan = finalizePlan(brief, parsed);
+  
+  // Score creatives by expected relative performance
+  addScoresToPlan(plan, brief);
+  const creativeScores = scoreCreatives(plan, brief);
+  console.log(`[Scoring] Scored ${creativeScores.length} creatives. Top score: ${creativeScores[0]?.score || 'N/A'}`);
+  
+  // Validate against knowledge base
+  const kbValidationErrors = validateAgainstKB(brief, plan);
+  
+  const latency = Date.now() - startTime;
+  const hallucinationFlags = detectHallucinations(brief, plan);
+  
+  const metrics: RequestMetrics = {
+    campaignId: brief.campaign_id,
+    timestamp: new Date().toISOString(),
+    tokens: llmResponse.tokens,
+    latency,
+    hallucinationFlags,
+    validationErrors: [
+      ...(plan.checks.budget_sum_ok ? [] : ['budget_sum_mismatch']),
+      ...kbValidationErrors,
+    ],
+  };
+
+  // Log metrics
+  logMetrics(metrics);
+
+  return { plan, metrics };
 }
 
 function inferObjective(goal: string): string {

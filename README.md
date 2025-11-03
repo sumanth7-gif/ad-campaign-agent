@@ -51,6 +51,10 @@ npm run dev
 ✅ **Consistency Checks**: Budget sums, required fields, channel validation  
 ✅ **Formatted Summary**: UI displays human-readable campaign summary  
 ✅ **JSON Export**: Toggle to view raw JSON for technical review  
+✅ **Logging & Metrics**: Token counts, latency, hallucination detection  
+✅ **Retrieval Grounding**: KB-based fact verification (TF-IDF + Jaccard similarity)  
+✅ **Creative Scoring**: Rule-based heuristic ranks creatives by expected performance  
+✅ **Docker Support**: Containerized deployment ready  
 
 ## Assignment Requirements Coverage
 

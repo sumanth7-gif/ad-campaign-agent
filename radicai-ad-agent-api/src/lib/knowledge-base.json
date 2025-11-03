@@ -1,0 +1,97 @@
+{
+  "products": [
+    {
+      "product_id": "focusflow",
+      "product_name": "FocusFlow",
+      "verified_features": [
+        "AI-assisted task prioritization",
+        "calendar integration",
+        "offline mode",
+        "cross-platform sync",
+        "smart notifications"
+      ],
+      "official_price": "$9.99/month",
+      "trial_length": "14 days",
+      "official_description": "FocusFlow is a productivity app that helps professionals manage tasks with AI-assisted prioritization. It syncs with your calendar and works offline.",
+      "target_audience": ["young professionals", "remote workers", "productivity enthusiasts"],
+      "key_benefits": [
+        "Reduce task overwhelm",
+        "Better work-life balance",
+        "Automated prioritization"
+      ]
+    },
+    {
+      "product_id": "ecosip",
+      "product_name": "EcoSip",
+      "verified_features": [
+        "double-wall insulation",
+        "BPA-free materials",
+        "lifetime warranty",
+        "leak-proof lid",
+        "dishwasher safe"
+      ],
+      "official_price": "$24.99",
+      "trial_length": null,
+      "official_description": "EcoSip is a reusable water bottle made from BPA-free materials with double-wall insulation to keep drinks cold for 24 hours.",
+      "target_audience": ["eco-conscious shoppers", "fitness enthusiasts", "outdoor adventurers"],
+      "key_benefits": [
+        "Stay hydrated sustainably",
+        "Reduces single-use plastic",
+        "Durable and long-lasting"
+      ]
+    }
+  ],
+  "ad_metrics": [
+    {
+      "campaign_id": "cmp_historical_001",
+      "product_category": "productivity app",
+      "channel": "search",
+      "headline_type": "trial-focused",
+      "headline_keywords": ["free trial", "try", "start"],
+      "ctr": 0.045,
+      "conversion_rate": 0.12,
+      "avg_cost_per_conversion": 8.33
+    },
+    {
+      "campaign_id": "cmp_historical_002",
+      "product_category": "productivity app",
+      "channel": "social",
+      "headline_type": "feature-focused",
+      "headline_keywords": ["ai", "automation", "smart"],
+      "ctr": 0.032,
+      "conversion_rate": 0.08,
+      "avg_cost_per_conversion": 12.50
+    },
+    {
+      "campaign_id": "cmp_historical_003",
+      "product_category": "productivity app",
+      "channel": "search",
+      "headline_type": "benefit-focused",
+      "headline_keywords": ["productivity", "efficiency", "time"],
+      "ctr": 0.038,
+      "conversion_rate": 0.10,
+      "avg_cost_per_conversion": 10.00
+    },
+    {
+      "campaign_id": "cmp_historical_004",
+      "product_category": "reusable water bottle",
+      "channel": "social",
+      "headline_type": "sustainability-focused",
+      "headline_keywords": ["eco", "sustainable", "green"],
+      "ctr": 0.028,
+      "conversion_rate": 0.06,
+      "avg_cost_per_conversion": 15.00
+    },
+    {
+      "campaign_id": "cmp_historical_005",
+      "product_category": "reusable water bottle",
+      "channel": "display",
+      "headline_type": "feature-focused",
+      "headline_keywords": ["insulation", "BPA-free", "warranty"],
+      "ctr": 0.015,
+      "conversion_rate": 0.04,
+      "avg_cost_per_conversion": 18.75
+    }
+  ]
+}
+

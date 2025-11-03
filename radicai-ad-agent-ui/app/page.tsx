@@ -7,7 +7,7 @@ function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(amount);
 }
 
-function CampaignSummary({ plan }: { plan: any }) {
+function CampaignSummary({ plan, metrics }: { plan: any; metrics?: any }) {
   const totalBudget = plan.total_budget || 0;
   const breakdown = plan.budget_breakdown || {};
   const adGroups = plan.ad_groups || [];
@@ -141,9 +141,23 @@ function CampaignSummary({ plan }: { plan: any }) {
                       padding: 12, 
                       background: '#f9fafb', 
                       borderRadius: 4,
-                      borderLeft: '3px solid #3b82f6'
+                      borderLeft: `3px solid ${creative.relative_score >= 70 ? '#10b981' : creative.relative_score >= 50 ? '#f59e0b' : '#3b82f6'}`
                     }}
                   >
+                    {creative.relative_score !== undefined && (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                        <div style={{ 
+                          padding: '2px 8px', 
+                          background: creative.relative_score >= 70 ? '#d1fae5' : creative.relative_score >= 50 ? '#fef3c7' : '#dbeafe',
+                          color: creative.relative_score >= 70 ? '#065f46' : creative.relative_score >= 50 ? '#92400e' : '#1e40af',
+                          borderRadius: 4,
+                          fontSize: 11,
+                          fontWeight: 600
+                        }}>
+                          Score: {creative.relative_score} / Rank: #{creative.performance_rank}
+                        </div>
+                      </div>
+                    )}
                     <div style={{ marginBottom: 8 }}>
                       <strong style={{ fontSize: 12, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                         Headline:
@@ -195,7 +209,8 @@ function CampaignSummary({ plan }: { plan: any }) {
           ? '#f0fdf4' 
           : '#fef2f2',
         border: `1px solid ${checks.budget_sum_ok && checks.required_fields_present && checks.channel_valid !== false ? '#bbf7d0' : '#fecaca'}`,
-        borderRadius: 6
+        borderRadius: 6,
+        marginBottom: 16
       }}>
         <strong style={{ fontSize: 14, marginBottom: 8, display: 'block' }}>Validation Checks:</strong>
         <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
@@ -212,6 +227,72 @@ function CampaignSummary({ plan }: { plan: any }) {
           )}
         </div>
       </div>
+
+      {/* Metrics */}
+      {metrics && (
+        <div style={{ 
+          padding: 16, 
+          background: '#f0f9ff', 
+          border: '1px solid #bae6fd',
+          borderRadius: 6
+        }}>
+          <h3 style={{ fontSize: 18, marginTop: 0, marginBottom: 16, color: '#111827' }}>📈 Request Metrics</h3>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12, marginBottom: 16 }}>
+            <div style={{ background: 'white', padding: 12, borderRadius: 6, border: '1px solid #e5e7eb' }}>
+              <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 4 }}>Tokens</div>
+              <div style={{ fontSize: 16, fontWeight: 600 }}>
+                {metrics.tokens?.total || 0}
+              </div>
+              <div style={{ fontSize: 11, color: '#9ca3af' }}>
+                {metrics.tokens?.prompt || 0} prompt + {metrics.tokens?.completion || 0} completion
+              </div>
+            </div>
+            <div style={{ background: 'white', padding: 12, borderRadius: 6, border: '1px solid #e5e7eb' }}>
+              <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 4 }}>Latency</div>
+              <div style={{ fontSize: 16, fontWeight: 600 }}>
+                {metrics.latency ? `${metrics.latency}ms` : 'N/A'}
+              </div>
+              <div style={{ fontSize: 11, color: '#9ca3af' }}>
+                Request processing time
+              </div>
+            </div>
+          </div>
+
+          {metrics.hallucinationFlags && (
+            <div style={{ 
+              padding: 12, 
+              background: metrics.hallucinationFlags.score === 0 
+                ? '#f0fdf4' 
+                : metrics.hallucinationFlags.score < 0.5
+                ? '#fffbeb'
+                : '#fef2f2',
+              border: `1px solid ${metrics.hallucinationFlags.score === 0 
+                ? '#bbf7d0' 
+                : metrics.hallucinationFlags.score < 0.5
+                ? '#fde68a'
+                : '#fecaca'}`,
+              borderRadius: 6
+            }}>
+              <strong style={{ fontSize: 14, marginBottom: 8, display: 'block' }}>Hallucination Detection:</strong>
+              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 8 }}>
+                <div style={{ fontSize: 13 }}>
+                  {metrics.hallucinationFlags.productFeaturesInvented ? '⚠️' : '✅'} Features Grounded
+                </div>
+                <div style={{ fontSize: 13 }}>
+                  {metrics.hallucinationFlags.invalidChannels ? '⚠️' : '✅'} Channels Valid
+                </div>
+              </div>
+              <div style={{ fontSize: 13, fontWeight: 500, color: metrics.hallucinationFlags.score === 0 ? '#059669' : metrics.hallucinationFlags.score < 0.5 ? '#d97706' : '#dc2626' }}>
+                Overall Score: {(metrics.hallucinationFlags.score * 100).toFixed(0)}% 
+                {metrics.hallucinationFlags.score === 0 && ' (No issues detected)'}
+                {metrics.hallucinationFlags.score > 0 && metrics.hallucinationFlags.score < 0.5 && ' (Minor issues)'}
+                {metrics.hallucinationFlags.score >= 0.5 && ' (Issues detected)'}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -235,6 +316,7 @@ export default function Page() {
   const [briefText, setBriefText] = useState(JSON.stringify(exampleBrief, null, 2));
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
+  const [metrics, setMetrics] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [showSummary, setShowSummary] = useState(false);
 
@@ -242,11 +324,18 @@ export default function Page() {
     e.preventDefault();
     setError(null);
     setResult(null);
+    setMetrics(null);
     setLoading(true);
     try {
       const parsed: Brief = JSON.parse(briefText);
       const res = await createPlan(parsed);
-      setResult(res);
+      // Handle response with or without metrics
+      if (res.plan && res.metrics) {
+        setResult(res.plan);
+        setMetrics(res.metrics);
+      } else {
+        setResult(res);
+      }
     } catch (err: any) {
       setError(err?.message || "Unknown error");
     } finally {
@@ -315,7 +404,7 @@ export default function Page() {
           </div>
           
           {showSummary ? (
-            <CampaignSummary plan={result} />
+            <CampaignSummary plan={result} metrics={metrics} />
           ) : (
             <pre style={{ 
               background: '#f5f5f5', 
@@ -326,7 +415,7 @@ export default function Page() {
               fontSize: 13,
               lineHeight: 1.6
             }}>
-              {JSON.stringify(result, null, 2)}
+              {JSON.stringify(metrics ? { plan: result, metrics } : result, null, 2)}
             </pre>
           )}
         </div>

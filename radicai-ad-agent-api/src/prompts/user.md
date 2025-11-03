@@ -17,3 +17,5 @@ Schema hints:
 - budget_breakdown must sum to total_budget
 - targets can include age ranges and behaviors inferred from audience_hints
 
+Note: If verified product facts or historical ad performance data are provided below, use them to ground your claims and inform creative strategy.
+
