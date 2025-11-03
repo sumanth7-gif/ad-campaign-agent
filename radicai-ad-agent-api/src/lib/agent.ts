@@ -47,6 +47,10 @@ export async function generatePlanFromBrief(briefInput: unknown, options: AgentO
     { role: "system", content: systemPrompt },
     { role: "user", content: fillUserPrompt(brief) }
   ], options.modelId);
+  
+  if (llmResponse.modelUsed) {
+    console.log(`[Agent] Model used: ${llmResponse.modelUsed}`);
+  }
 
   let raw: unknown;
   try {
