@@ -2,7 +2,7 @@
 
 ## Approach
 
-The agent uses a two-stage prompt strategy: a system prompt constrains behavior (JSON-only output, schema adherence), and a user prompt embeds the brief with explicit field requirements. Groq's `openai/gpt-oss-120b` model generates structured JSON responses, which are validated using Zod schemas and post-processed to ensure consistency. Retrieval grounding injects verified product facts and historical ad metrics into the prompt to reduce hallucinations. A lightweight heuristic scores creatives by expected performance.
+The agent uses a two-stage prompt strategy: a system prompt constrains behavior (JSON-only output, schema adherence), and a user prompt embeds the brief with explicit field requirements. Groq's `openai/gpt-oss-120b` model (with automatic fallback to `llama-3.3-70b-versatile` if primary fails) generates structured JSON responses, which are validated using Zod schemas and post-processed to ensure consistency. Retrieval grounding injects verified product facts and historical ad metrics into the prompt to reduce hallucinations. A lightweight heuristic scores creatives by expected performance.
 
 ## Results
 
@@ -21,9 +21,9 @@ The agent uses a two-stage prompt strategy: a system prompt constrains behavior 
 - Strong schema validation prevents invalid outputs from propagating
 - Clear separation of concerns (prompts, validation, post-processing)
 - Handles edge cases gracefully (missing audience hints, single channel campaigns)
-- Fast inference via Groq
+- Fast inference via Groq with automatic model fallback for resilience
 - Retrieval grounding reduces fabricated facts without external embedding services
-- Transparent logging/metrics (tokens, latency, hallucination flags) aid debugging and ops
+- Transparent logging/metrics (tokens, latency, hallucination flags, model used) aid debugging and ops
 
 ## Limitations
 
@@ -54,6 +54,20 @@ The agent uses a two-stage prompt strategy: a system prompt constrains behavior 
 
 - Factors (0–100): keyword match vs high-performing headlines (0–40), headline type alignment (0–20), best practices (0–25), channel performance baseline (0–15).
 - Outputs per creative: `relative_score`, `performance_rank`, `score_factors`. UI displays scores and sorts by best first.
+
+## Model Fallback & Resilience
+
+- Primary model: `openai/gpt-oss-120b` (configurable via `GROQ_MODEL`)
+- Fallback model: `llama-3.3-70b-versatile` (configurable via `GROQ_FALLBACK_MODEL`)
+- If the primary model fails (rate limits, availability, errors), the agent automatically retries with the fallback model
+- Logs indicate which model was used for each request (`[Agent] Model used: ...`)
+- This ensures higher availability without requiring manual intervention or code changes
+
+## Logging & Observability
+
+- Every request logs structured metrics (JSON) to console: campaign ID, timestamp, token counts (prompt/completion/total), latency (ms), hallucination flags, validation errors
+- Metrics can optionally be included in API response via `?include_metrics=true` query parameter for debugging
+- Logs include model fallback events and which model succeeded for each request
 
 ## Future Improvements
 
