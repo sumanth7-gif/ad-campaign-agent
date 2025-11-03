@@ -154,7 +154,7 @@ function CampaignSummary({ plan, metrics }: { plan: any; metrics?: any }) {
                           fontSize: 11,
                           fontWeight: 600
                         }}>
-                          Score: {creative.relative_score} / Rank: #{creative.performance_rank}
+                          Score: {creative.relative_score} / Global Rank: #{creative.performance_rank}
                         </div>
                       </div>
                     )}
@@ -275,14 +275,18 @@ function CampaignSummary({ plan, metrics }: { plan: any; metrics?: any }) {
               borderRadius: 6
             }}>
               <strong style={{ fontSize: 14, marginBottom: 8, display: 'block' }}>Hallucination Detection:</strong>
-              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 8 }}>
-                <div style={{ fontSize: 13 }}>
-                  {metrics.hallucinationFlags.productFeaturesInvented ? '⚠️' : '✅'} Features Grounded
-                </div>
-                <div style={{ fontSize: 13 }}>
-                  {metrics.hallucinationFlags.invalidChannels ? '⚠️' : '✅'} Channels Valid
-                </div>
-              </div>
+                      <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 8 }}>
+                        <div style={{ fontSize: 13 }}>
+                          {metrics.hallucinationFlags.productFeaturesInvented 
+                            ? '⚠️ Invented Features'
+                            : '✅ No Invented Features'}
+                        </div>
+                        <div style={{ fontSize: 13 }}>
+                          {metrics.hallucinationFlags.invalidChannels 
+                            ? '⚠️ Invalid Channels'
+                            : '✅ Channels Valid'}
+                        </div>
+                      </div>
               <div style={{ fontSize: 13, fontWeight: 500, color: metrics.hallucinationFlags.score === 0 ? '#059669' : metrics.hallucinationFlags.score < 0.5 ? '#d97706' : '#dc2626' }}>
                 Overall Score: {(metrics.hallucinationFlags.score * 100).toFixed(0)}% 
                 {metrics.hallucinationFlags.score === 0 && ' (No issues detected)'}

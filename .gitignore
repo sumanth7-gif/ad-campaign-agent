@@ -20,7 +20,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Assignment documents (if you want to exclude them, uncomment)
-# *.pdf
-# *.docx
+# Assignment documents
+*.pdf
+*.docx
 

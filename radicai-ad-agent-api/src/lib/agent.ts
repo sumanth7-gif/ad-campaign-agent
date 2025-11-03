@@ -63,6 +63,17 @@ export async function generatePlanFromBrief(briefInput: unknown, options: AgentO
   const creativeScores = scoreCreatives(plan, brief);
   console.log(`[Scoring] Scored ${creativeScores.length} creatives. Top score: ${creativeScores[0]?.score || 'N/A'}`);
   
+  // Sort creatives within each ad group by score (highest first) for clearer display order
+  for (const group of plan.ad_groups || []) {
+    if (Array.isArray(group.creatives)) {
+      (group.creatives as any[]).sort((a, b) => {
+        const sa = typeof a?.relative_score === 'number' ? a.relative_score : -Infinity;
+        const sb = typeof b?.relative_score === 'number' ? b.relative_score : -Infinity;
+        return sb - sa;
+      });
+    }
+  }
+  
   // Validate against knowledge base
   const kbValidationErrors = validateAgainstKB(brief, plan);
   
