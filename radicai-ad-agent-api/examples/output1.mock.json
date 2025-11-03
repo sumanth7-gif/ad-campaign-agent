@@ -1,19 +1,123 @@
 {
-  "campaign_id": "cmp_2025_09_01",
-  "campaign_name": "FocusFlow trial signups",
-  "objective": "trial_signups",
-  "total_budget": 5000,
-  "budget_breakdown": { "search": 2500, "social": 2500 },
-  "ad_groups": [
-    {
-      "id": "ag_1",
-      "target": { "hint": "young professionals", "age": "25-45", "behaviors": ["productivity apps", "remote work"] },
-      "creatives": [
-        { "id": "c_1a", "headline": "Try FocusFlow — Free 14-Day Trial", "body": "AI task prioritization that fits your calendar.", "cta": "Start Free Trial", "justification": "Trial + AI feature" },
-        { "id": "c_1b", "headline": "Get More Done with FocusFlow", "body": "Prioritize what matters. Free trial, then $9.99/mo.", "cta": "Get Started", "justification": "Emphasizes value + price" }
-      ]
+  "plan": {
+    "campaign_id": "cmp_2025_09_01",
+    "campaign_name": "FocusFlow Trial Signup Campaign",
+    "objective": "trial_signups",
+    "total_budget": 5000,
+    "budget_breakdown": {
+      "search": 3000,
+      "social": 2000
+    },
+    "ad_groups": [
+      {
+        "id": "ag_1",
+        "channel": "search",
+        "target": {
+          "age_range": "25-35",
+          "behaviors": [
+            "young professionals",
+            "remote workers",
+            "searching for productivity tools"
+          ]
+        },
+        "creatives": [
+          {
+            "id": "c_1a",
+            "headline": "Start Your Free 14-Day FocusFlow Trial",
+            "body": "AI-powered task prioritization, calendar sync, and offline mode help you conquer your to‑do list.",
+            "cta": "Start Free Trial",
+            "justification": "Leverages high‑performing trial keyword theme proven 4.5% CTR in search data.",
+            "relative_score": 67.07,
+            "performance_rank": 1,
+            "score_factors": {
+              "keywordMatch": 13.33,
+              "headlineTypeMatch": 15.05,
+              "bestPractices": 25,
+              "channelPerformance": 13.69
+            }
+          },
+          {
+            "id": "c_1b",
+            "headline": "Boost Productivity with AI",
+            "body": "Let FocusFlow prioritize tasks, sync calendars, and work offline—so you stay ahead.",
+            "cta": "Try Free for 14 Days",
+            "justification": "Benefit‑focused copy aligns with 3.8% CTR search performance.",
+            "relative_score": 43.73,
+            "performance_rank": 4,
+            "score_factors": {
+              "keywordMatch": 0,
+              "headlineTypeMatch": 10.04,
+              "bestPractices": 20,
+              "channelPerformance": 13.69
+            }
+          }
+        ]
+      },
+      {
+        "id": "ag_2",
+        "channel": "social",
+        "target": {
+          "age_range": "25-45",
+          "behaviors": [
+            "remote workers",
+            "tech enthusiasts",
+            "productivity app users"
+          ]
+        },
+        "creatives": [
+          {
+            "id": "c_2a",
+            "headline": "AI Task Prioritization on the Go",
+            "body": "FocusFlow's smart AI orders your tasks, integrates with your calendar, and works offline—perfect for remote pros.",
+            "cta": "Get 14‑Day Free Trial",
+            "justification": "Feature‑focused angle delivered 3.2% CTR in historical social ads.",
+            "relative_score": 49.38,
+            "performance_rank": 2,
+            "score_factors": {
+              "keywordMatch": 26.67,
+              "headlineTypeMatch": 5.03,
+              "bestPractices": 10,
+              "channelPerformance": 7.68
+            }
+          },
+          {
+            "id": "c_2b",
+            "headline": "Work Smarter, Not Harder",
+            "body": "Reduce overwhelm, achieve work‑life balance, and stay productive with FocusFlow's AI and offline mode.",
+            "cta": "Start Free Trial",
+            "justification": "Emphasizes key benefits to attract remote workers and boost conversions.",
+            "relative_score": 49.38,
+            "performance_rank": 3,
+            "score_factors": {
+              "keywordMatch": 26.67,
+              "headlineTypeMatch": 5.03,
+              "bestPractices": 10,
+              "channelPerformance": 7.68
+            }
+          }
+        ]
+      }
+    ],
+    "checks": {
+      "budget_sum_ok": true,
+      "required_fields_present": true,
+      "channel_valid": true
     }
-  ],
-  "checks": { "budget_sum_ok": true, "required_fields_present": true, "channel_valid": true }
+  },
+  "metrics": {
+    "campaignId": "cmp_2025_09_01",
+    "timestamp": "2025-11-03T10:48:19.851Z",
+    "tokens": {
+      "prompt": 795,
+      "completion": 991,
+      "total": 1786
+    },
+    "latency": 2405,
+    "hallucinationFlags": {
+      "productFeaturesInvented": true,
+      "invalidChannels": false,
+      "score": 0.2
+    },
+    "validationErrors": []
+  }
 }
-

@@ -6,7 +6,7 @@ The agent uses a two-stage prompt strategy: a system prompt constrains behavior 
 
 ## Results
 
-**Accuracy**: The agent successfully generates valid campaign plans from briefs, with schema compliance enforced via Zod validation. On test cases (`brief1.json`, `brief2.json`), the model produces coherent ad groups, multiple creative variants per group, and correctly infers objectives from goals.
+**Accuracy**: The agent successfully generates valid campaign plans from briefs, with schema compliance enforced via Zod validation. On test cases (`brief1.json`, `brief2.json`), the model produces coherent ad groups, multiple creative variants per group, and correctly infers objectives from goals. Full input briefs and corresponding output plans are provided in `radicai-ad-agent-api/examples/` (including scores, metrics, and hallucination flags).
 
 **Failure Modes Observed**:
 1. **Schema drift** (5-10% of runs): Model occasionally omits optional fields or uses non-standard field names. Mitigation: Strict Zod validation surfaces errors immediately.

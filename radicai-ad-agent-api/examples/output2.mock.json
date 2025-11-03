@@ -1,19 +1,122 @@
 {
-  "campaign_id": "cmp_2025_10_15",
-  "campaign_name": "EcoSip awareness",
-  "objective": "awareness",
-  "total_budget": 8000,
-  "budget_breakdown": { "social": 4000, "display": 4000 },
-  "ad_groups": [
-    {
-      "id": "ag_1",
-      "target": { "hint": "eco-conscious shoppers", "age": "25-45", "behaviors": ["sustainability", "fitness"] },
-      "creatives": [
-        { "id": "c_1a", "headline": "Meet EcoSip — Built to Last", "body": "BPA-free, double-wall insulation. Hydrate sustainably.", "cta": "Learn More", "justification": "Features + sustainability" },
-        { "id": "c_1b", "headline": "Hydrate Smarter with EcoSip", "body": "Lifetime warranty and everyday durability.", "cta": "Shop Now", "justification": "Warranty + durability" }
-      ]
+  "plan": {
+    "campaign_id": "cmp_2025_10_15",
+    "campaign_name": "EcoSip Holiday Brand Awareness Campaign",
+    "objective": "brand_awareness",
+    "total_budget": 8000,
+    "budget_breakdown": {
+      "social": 4800,
+      "display": 3200
+    },
+    "ad_groups": [
+      {
+        "id": "ag_1",
+        "channel": "social",
+        "target": {
+          "age_range": "18-35",
+          "interests": [
+            "eco-friendly",
+            "fitness",
+            "outdoor activities"
+          ]
+        },
+        "creatives": [
+          {
+            "id": "c_1a",
+            "headline": "EcoSip: Stay Cool, Save the Planet",
+            "body": "Join the eco‑movement with a reusable bottle that keeps drinks cold for 24 hours. BPA‑free, double‑wall insulated, and backed by a lifetime warranty—all for $24.99.",
+            "cta": "Shop Now",
+            "justification": "Uses sustainability‑focused language proven to lift CTR on social; aligns with eco‑conscious shoppers and friendly, inspiring tone.",
+            "relative_score": 43.39,
+            "performance_rank": 1,
+            "score_factors": {
+              "keywordMatch": 13.33,
+              "headlineTypeMatch": 5.02,
+              "bestPractices": 20,
+              "channelPerformance": 5.04
+            }
+          },
+          {
+            "id": "c_1b",
+            "headline": "Your Workout Buddy, Eco Style",
+            "body": "Fuel your fitness with a leak‑proof, dishwasher‑safe bottle that stays icy cold. Perfect for gym sessions or trail runs, and it's BPA‑free for peace of mind.",
+            "cta": "Get Yours",
+            "justification": "Targets fitness enthusiasts, highlights double‑wall insulation and durability; matches historical social performance on active‑lifestyle messaging.",
+            "relative_score": 43.39,
+            "performance_rank": 2,
+            "score_factors": {
+              "keywordMatch": 13.33,
+              "headlineTypeMatch": 5.02,
+              "bestPractices": 20,
+              "channelPerformance": 5.04
+            }
+          }
+        ]
+      },
+      {
+        "id": "ag_2",
+        "channel": "display",
+        "target": {
+          "age_range": "25-45",
+          "interests": [
+            "sustainable living",
+            "health & wellness"
+          ]
+        },
+        "creatives": [
+          {
+            "id": "c_2a",
+            "headline": "Double‑Wall Insulation Keeps Drinks Cold 24h",
+            "body": "EcoSip's insulated bottle delivers icy refreshment all day, leak‑proof lid, dishwasher safe, and a lifetime warranty—all for $24.99.",
+            "cta": "Buy Today",
+            "justification": "Feature‑focused headline leverages display‑channel keyword strengths (insulation, BPA‑free) and drives brand awareness.",
+            "relative_score": 38.47,
+            "performance_rank": 3,
+            "score_factors": {
+              "keywordMatch": 26.67,
+              "headlineTypeMatch": 0,
+              "bestPractices": 10,
+              "channelPerformance": 1.8
+            }
+          },
+          {
+            "id": "c_2b",
+            "headline": "Lifetime Warranty on Every EcoSip Bottle",
+            "body": "Invest in a bottle that lasts a lifetime. BPA‑free, double‑wall insulated, and built to reduce single‑use plastic—yours for $24.99.",
+            "cta": "Order Now",
+            "justification": "Emphasizes durability and warranty, resonating with mature, sustainability‑focused audience; aligns with display's effective keyword set.",
+            "relative_score": 30.13,
+            "performance_rank": 4,
+            "score_factors": {
+              "keywordMatch": 13.33,
+              "headlineTypeMatch": 0,
+              "bestPractices": 15,
+              "channelPerformance": 1.8
+            }
+          }
+        ]
+      }
+    ],
+    "checks": {
+      "budget_sum_ok": true,
+      "required_fields_present": true,
+      "channel_valid": true
     }
-  ],
-  "checks": { "budget_sum_ok": true, "required_fields_present": true, "channel_valid": true }
+  },
+  "metrics": {
+    "campaignId": "cmp_2025_10_15",
+    "timestamp": "2025-11-03T10:49:26.026Z",
+    "tokens": {
+      "prompt": 735,
+      "completion": 1248,
+      "total": 1983
+    },
+    "latency": 2817,
+    "hallucinationFlags": {
+      "productFeaturesInvented": false,
+      "invalidChannels": false,
+      "score": 0
+    },
+    "validationErrors": []
+  }
 }
-
