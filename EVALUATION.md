@@ -28,10 +28,10 @@ The agent uses a two-stage prompt strategy: a system prompt constrains behavior 
 ## Limitations
 
 - Creative quality depends on model capabilities and cannot be fully automated
-- No automatic retry mechanism for failed schema validation (would require LLM re-invocation)
+- No automatic retry mechanism for failed schema validation (model fallback handles inference failures, but schema errors require manual correction)
 - Budget allocation is model-driven; no heuristic optimization beyond basic checks
 - Limited to English-language briefs
- - Hallucination check is keyword-based (explainable but not fully semantic)
+- Hallucination check is keyword-based (explainable but not fully semantic)
 
 ## Prompt Choices & Validation
 
@@ -71,14 +71,15 @@ The agent uses a two-stage prompt strategy: a system prompt constrains behavior 
 
 ## Future Improvements
 
-1. Robust retry loop with targeted repair prompts and function-tool calls for re-validation.
-2. Model abstraction layer to support multiple providers/models (Groq, OpenAI, local) with unified token/cost reporting and fallbacks.
-3. Multi‑agent design: planner (structure/budget), copywriter (creatives), verifier (schema/KB checks), and scorer (rank). Orchestrate via lightweight router/state.
-4. Conversational UI + memory: iterative refinement (“more playful tone”, “shift 10% to social”), with ephemeral session memory and diffed updates.
-5. Constraint‑aware budget optimizer (simple LP/heuristics) guided by historical channel performance and objective.
-6. Semantic hallucination guard: small embedding model for feature similarity; escalate to LLM judge only on uncertain cases.
-7. Streaming and partial results: stream plan drafts to UI; progressively fill ad groups and scores.
-8. Caching and idempotency: request hashing, KB versioning, deterministic seeds for reproducibility.
-9. Observability: structured logs to a sink, traces, and metrics dashboards; redteam test sets and regression checks.
-10. Multi-language support via translation layer and locale-aware copy heuristics.
+1. Schema-aware retry loop with targeted repair prompts when validation fails (model fallback already handles inference failures).
+2. Enhanced error reporting: surface detailed Zod validation errors to users/API responses, indicating exactly which fields failed, expected types, and constraints violated. Currently errors are generic; rich feedback would aid debugging and self-service correction.
+3. Model abstraction layer to support multiple providers/models (Groq, OpenAI, local) with unified token/cost reporting and fallbacks.
+4. Multi‑agent design: planner (structure/budget), copywriter (creatives), verifier (schema/KB checks), and scorer (rank). Orchestrate via lightweight router/state.
+5. Conversational UI + memory: iterative refinement ("more playful tone", "shift 10% to social"), with ephemeral session memory and diffed updates.
+6. Constraint‑aware budget optimizer (simple LP/heuristics) guided by historical channel performance and objective.
+7. Semantic hallucination guard: small embedding model for feature similarity; escalate to LLM judge only on uncertain cases.
+8. Streaming and partial results: stream plan drafts to UI; progressively fill ad groups and scores.
+9. Caching and idempotency: request hashing, KB versioning, deterministic seeds for reproducibility.
+10. Observability: structured logs to a sink, traces, and metrics dashboards; redteam test sets and regression checks.
+11. Multi-language support via translation layer and locale-aware copy heuristics.
 
