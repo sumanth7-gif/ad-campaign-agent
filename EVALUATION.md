@@ -69,6 +69,13 @@ The agent uses a two-stage prompt strategy: a system prompt constrains behavior 
 - Metrics can optionally be included in API response via `?include_metrics=true` query parameter for debugging
 - Logs include model fallback events and which model succeeded for each request
 
+## User Interface
+
+- Next.js frontend (`radicai-ad-agent-ui/`) provides a form-based interface for inputting campaign briefs
+- **Summary/JSON toggle**: Users can switch between a formatted campaign summary (budget breakdown, ad groups, creatives with scores) and raw JSON output
+- Summary view displays: campaign overview, budget allocation with percentages, ad groups with color-coded creative scores (green ≥70, yellow ≥50, blue <50), validation checks, and metrics (if enabled)
+- Designed for quick readability and stakeholder presentation while preserving technical detail access via JSON view
+
 ## Future Improvements
 
 1. Schema-aware retry loop with targeted repair prompts when validation fails (model fallback already handles inference failures).
