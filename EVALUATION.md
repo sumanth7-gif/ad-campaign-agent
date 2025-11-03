@@ -76,6 +76,12 @@ The agent uses a two-stage prompt strategy: a system prompt constrains behavior 
 - Summary view displays: campaign overview, budget allocation with percentages, ad groups with color-coded creative scores (green ≥70, yellow ≥50, blue <50), validation checks, and metrics (if enabled)
 - Designed for quick readability and stakeholder presentation while preserving technical detail access via JSON view
 
+## Deployment / Docker
+
+- Production build verified via `npm run build` (Next.js standalone output enabled)
+- A Dockerfile is provided that mirrors the same build process and follows Next.js best practices for standalone runtime
+- Docker image was not run locally on this machine (Docker not installed), but is expected to work unchanged based on the successful production build
+
 ## Future Improvements
 
 1. Schema-aware retry loop with targeted repair prompts when validation fails (model fallback already handles inference failures).
